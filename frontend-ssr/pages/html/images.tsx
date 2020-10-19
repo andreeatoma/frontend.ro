@@ -50,7 +50,7 @@ export default function ImagesLesson() {
             element
           </h3>
           <p>
-            Primul si cel mai obisnuit mod de a adauga o imagine este folosind elementul img alaturi de 2 atribute
+            Primul si cel mai obisnuit mod de a adauga o imagine este folosind elementul img alaturi de 2 atribute:
           </p>
           <ul className="with--bullets">
             <li>
