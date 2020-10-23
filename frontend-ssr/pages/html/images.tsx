@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import SEOTags from '~/components/SEOTags';
 import Lesson, { LessonContributors, LessonCover } from '~/components/lessons';
 import { Pava } from '~/services/contributors';
 import Highlight from '~/components/Highlight/Highlight';
+import SideBySidePictures from '~/components/SideBySidePictures';
+import AudioPlayer from '~/components/AudioPlayer';
 
 const contributors = [Pava];
 const chapters = [
@@ -63,13 +65,30 @@ export default function ImagesLesson() {
             </li>
           </ul>
           <Highlight
+            className="my-5"
             language="html"
             code={`
-<img srcset="bike_low.jpg 800w, 
-  bike_med.jpg 2000w, 
-  bike_high.jpg 4000w" 
-  src="bike_med.jpg" alt="red bike">`}
+<img 
+  src="golden-retrieve-and-ball.jpg" 
+  alt="Golden retriever biting blue ball"
+/>`}
           />
+          <p>
+            Daca imaginea se afla la acel URL si avem conexiune la internet,
+            vom obtine o pagina ca in imaginea din stanga. Insa, daca browserul nu a putut incarca imaginea - vom vedea descrierea text - imaginea din dreapta.
+          </p>
+          <SideBySidePictures
+            img1={{ src: '/images/lessons/images/golden-retriever-and-ball.jpg', alt: 'Imagine încărcată cu succes într-o pagină Web' }}
+            img2={{ src: '/images/lessons/images/golden-retriever-and-ball.jpg', alt: 'Descrierea text a imaginii, dacă aceasta nu a putut fi încărcată' }}
+          />
+          <p>
+            Este foarte important sa nu uitam de atributul
+            {' '}
+            <strong>alt</strong>
+            .
+            Pe langa cazul mentionat mai sus, acesta ajuta si persoanele cu dizabilitati ce consuma continut Web via screen readere. Uite un demo folosind progamul XXX?
+          </p>
+          <AudioPlayer className="my-5" src="" title="Web captions demo" />
         </section>
 
       </Lesson>
