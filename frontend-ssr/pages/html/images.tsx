@@ -1,7 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
 import SEOTags from '~/components/SEOTags';
-import Lesson, { LessonContributors, LessonCover } from '~/components/lessons';
+import Lesson, {
+  LessonContributors, LessonCover, LessonHeading, LessonTip,
+} from '~/components/lessons';
 import { Pava } from '~/services/contributors';
 import Highlight from '~/components/Highlight/Highlight';
 import SideBySidePictures from '~/components/SideBySidePictures';
@@ -10,9 +12,9 @@ import AudioPlayer from '~/components/AudioPlayer';
 const contributors = [Pava];
 const chapters = [
   { title: '<img> element', id: 'img-element' },
-  { title: 'Width & Height', id: 'width-height' },
+  { title: 'Width & Height', id: 'width-and-height' },
   { title: 'Lazy loading', id: 'lazy-loading' },
-  { title: 'Imagini Responsive', id: 'responsive' },
+  { title: 'Responsive images', id: 'responsive-images' },
   { title: '<picture> element', id: 'picture-element' },
 ];
 
@@ -43,16 +45,12 @@ export default function ImagesLesson() {
         </p>
         <section>
           <h2> The Basics </h2>
-          <h3 className="heading-with-href" id="img-element">
-            <a href="#img-element">#</a>
-            {'<'}
-            img
-            {'>'}
-            {' '}
-            element
-          </h3>
+          <LessonHeading as="h3" id="img-element">
+            {'<img> element'}
+          </LessonHeading>
           <p>
-            Primul si cel mai obisnuit mod de a adauga o imagine este folosind elementul img alaturi de 2 atribute:
+            Primul si cel mai obisnuit mod de a adauga o imagine este folosind
+            elementul img alaturi de 2 atribute:
           </p>
           <ul className="with--bullets">
             <li>
@@ -75,7 +73,9 @@ export default function ImagesLesson() {
           />
           <p>
             Daca imaginea se afla la acel URL si avem conexiune la internet,
-            vom obtine o pagina ca in imaginea din stanga. Insa, daca browserul nu a putut incarca imaginea - vom vedea descrierea text - imaginea din dreapta.
+            vom obtine o pagina ca in imaginea din stanga. Insa, daca
+            browserul nu a putut incarca imaginea - vom vedea descrierea
+            text - imaginea din dreapta.
           </p>
           <SideBySidePictures
             img1={{ src: '/images/lessons/images/golden-retriever-and-ball.jpg', alt: 'Imagine încărcată cu succes într-o pagină Web' }}
@@ -86,11 +86,202 @@ export default function ImagesLesson() {
             {' '}
             <strong>alt</strong>
             .
-            Pe langa cazul mentionat mai sus, acesta ajuta si persoanele cu dizabilitati ce consuma continut Web via screen readere. Uite un demo folosind progamul XXX?
+            Pe langa cazul mentionat mai sus, acesta ajuta si persoanele cu dizabilitati
+            ce consuma continut Web via screen readere. Uite un demo folosind progamul XXX?
           </p>
           <AudioPlayer className="my-5" src="" title="Web captions demo" />
         </section>
+        <section>
+          <LessonHeading as="h3" id="width-and-height">
+            Width & Height
+          </LessonHeading>
+          <p>
+            De multe ori imaginile de pe site-uri isi vor adapta dimensiunea in functie de
+            ecranul dispozitivul folosit: mai mici pe telefoane si tablete, mai mari
+            pe laptop-uri si desktop-uri.
+          </p>
+          <p>
+            In demo-ul de mai jos imaginea este  "full-screen" deci in functie
+            de ecran ea va avea alta dimensiuni.
+          </p>
+          <h1> DEMO </h1>
+          <p>
+            La fel si in galeria de mai jos, unde avem exact 3 imagini pe fiecare rand.
+            Dimensiunea acestora e proportionala cu ecranul, mai exact 30% din dimensiunea lui.
+          </p>
+          <h1> DEMO </h1>
+          <p>
+            Insa exista situatii in care o imagine va avea aceleași dimensiuni indiferent
+            de dispozitiv. Un exemplu ar putea fi logo-ul unui site/companii
+            aflat de obicei in
+            {' '}
+            <strong className="formatted">{'<header>'}</strong>
+            {' '}
+            -ul paginii.
+          </p>
+          <h1> DEMO </h1>
+          <p>
+            In aceste cazuri  - in care stim dinainte dimensiunea - este recomandat
+            sa adaugam si atributele
+            <strong> width </strong>
+            si
+            <strong>
+              {' '}
+              height
+              {' '}
+            </strong>
+            pe imagine.
+            Astfel, browser-ul va sti dimensiunile acesteia inainte de a incarca
+            imaginea iar experienta utilizatorilor va fi extrem de fluida.
+          </p>
+          <Highlight
+            className="my-5"
+            language="html"
+            code={`
+<img 
+  src="" 
+  width="" 
+  height="" 
+/>`}
+          />
+        </section>
+        <section>
+          <p>
+            Ce am discutat mai sus reprezinta fundamentele imaginilor in HTML.
+            Sunt lucrurile fara de care site-urile noastre ar fi doar text...
 
+          </p>
+
+          <p>
+            Mai jos continuam sa discutam despre diverse tehnici
+            pentru a optimiza servirea imaginilor si a oferi cea mai
+            buna experienta posibila, care la randul ei va mari
+            sansele ca proiectul/business-ul nostru sa aiba succes.
+            Daca esti curios sa citesti mai multe despre importanta
+            performantei, arunca un ochi pe [acest articol].
+          </p>
+        </section>
+        <section>
+          <LessonHeading as="h3" id="lazy-loading">
+            Lazy loading
+          </LessonHeading>
+          <blockquote>
+            Most of the images on the web are downloaded,
+            decoded and rendered only never to be seen, as [...]
+            the user never scrolled that far.
+            -
+            {' '}
+            <small>
+              <a href="https://twitter.com/yoavweiss" target="_blank" rel="noopener noreferrer">Yoav Weiss</a>
+            </small>
+          </blockquote>
+          <p>
+            Citatul de mai sus a ramas - din pacate - la fel de adevarat...
+            De cate ori nu ai deschis un articol si apoi ai iesit de pe pagina fara
+            a citi mai mult de primul paragraf?
+          </p>
+          <p>
+            In background insa, browser-ul a incarcat toate imaginile,
+            ceea ce e o risipa pentru ca noi nu le-am vazut pe toate.
+          </p>
+          <p>
+            Ideal ar fi sa incarcam imaginile
+            <strong>doar atunci cand avem nevoie de ele</strong>
+            .
+            Cum se intampla in video-ul din dreapta, unde imaginile sunt incarcate
+            cand ne apropiem de ele, versus in cel din stanga unde vedem comportamentul default.
+          </p>
+          <h1> VIDEO DEMO </h1>
+          <p>
+            Pentru a rezolva aceasta problema vom
+            folosi atributul
+            {' '}
+            <strong>loading</strong>
+            {' '}
+            si valoarea
+            {' '}
+            <strong>lazy</strong>
+            .
+          </p>
+          <Highlight
+            className="my-5"
+            language="html"
+            code={`
+<img 
+  src=""
+  loading="lazy"
+/>
+`}
+          />
+          <p>
+            In acest mod, browserul va downloada imaginea doar cand ne
+            "apropiem" de ea. Fiecare browser are propriile metrici legate
+            de ce inseamna aceasta apropiere, insa nu trebuie sa ne batem
+            capul cu asta. Regula generala e sa adaugam atributul loading
+            cu valoarea lazy daca avem un articol sau o galerie cu multe
+            imagini pentru a le incarca doar pe cele de care avem nevoie.
+          </p>
+        </section>
+        <section>
+          <LessonHeading as="h3" id="responsive-images">
+            Responsive images
+          </LessonHeading>
+          <p>
+            Am pornit de la imagini simple, am optimizat experienta folosind
+            atributele width/height iar apoi am reusit sa incarcam doar imaginile
+            de care avem nevoie folosind atributul loading.
+          </p>
+          <p>
+            Acum e momentul sa mergem un pas mai departe in calatoria spre performanta
+            si sa incarcam imaginea cea mai optima din punct de vedere al rezolutiei.
+          </p>
+          <p>
+            De exemplu, sa presupunem ca avem o imagine care va acoperi intreaga pagina,
+            ca in poza de mai jos.
+          </p>
+          <h1> DEMO </h1>
+          <p>
+            Intrebarea la care trebuie sa raspundem este: la ce rezolutie salvam imaginea
+            pentru a fi 100% clara pe toate dispozitivele?
+          </p>
+          <p>
+            Stiind ca site-ul poate fi vazut atat de pe dispozitive cu ecrane mici cat
+            si de pe ecrane uriase, o prima solutie ar fi sa salvam imaginea la o
+            rezolutie cat mai inalta - sa zicem 4K- pentru a ne asigura ca totul e
+            ok. Pentru imaginea folosita ca demo in acest capitol inseamna o dimensiune de xMB.
+          </p>
+          <p>
+            Desi solutia aceasta functioneaza, ea nu e cea mai eficienta. Pe telefon,
+            vom incarca aceeasi imagine uriasa, desi ecranul e mult mai mic si nu
+            avem nevoie de toti acesti pixeli. Daca luam in calcul si conexiunea
+            la internet, experienta poate arata asa:
+          </p>
+          <h1> VIDEO DEMO </h1>
+          <p>
+            Ideal ar fi ca pe telefon sa incarcam exact aceeasi imagine dar la o
+            rezolutie mai mica, pe tableta la o rezolutie mijlocie si la o rezolutie
+            cat mai inalta pe ecrane mari, desktop and beyond.
+          </p>
+          <p>
+            Din fericire putem rezolva aceasta problema folosindu-ne de atributele
+            <strong>srcset</strong>
+            {' '}
+            si
+            <strong>sizes</strong>
+            .
+          </p>
+          <p>
+            Mai intai hai sa luam imaginea noastra si sa facem resize la 3 rezolutii diferite:
+          </p>
+          <ul>
+            <li> X </li>
+            <li> Y </li>
+            <li> Z </li>
+          </ul>
+          <LessonTip>
+            Pe Windows putem face resize cu Paint, pe MacOS folosind X iar pe Linux Y.
+          </LessonTip>
+        </section>
       </Lesson>
     </>
   );
