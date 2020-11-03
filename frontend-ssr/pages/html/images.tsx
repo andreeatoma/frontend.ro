@@ -1,8 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
+import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 import SEOTags from '~/components/SEOTags';
 import Lesson, {
-  LessonContributors, LessonCover, LessonHeading, LessonTip,
+  LessonContributors, LessonCover, LessonHeading, LessonResources, LessonTable, LessonTableProps, LessonTip,
 } from '~/components/lessons';
 import { Pava } from '~/services/contributors';
 import Highlight from '~/components/Highlight/Highlight';
@@ -17,6 +18,16 @@ const chapters = [
   { title: 'Responsive images', id: 'responsive-images' },
   { title: '<picture> element', id: 'picture-element' },
 ];
+
+const sizesTable : LessonTableProps = {
+  head: ['JPG', 'PNG', 'WebP', 'AVIF'],
+  side: ['SD', 'HD', 'FullHD'],
+  rows: [
+    ['XXX MB', 'XXX MB', 'XXX MB', 'XXX MB'],
+    ['XXX MB', 'XXX MB', 'XXX MB', 'XXX MB'],
+    ['XXX MB', 'XXX MB', 'XXX MB', 'XXX MB'],
+  ],
+};
 
 export default function ImagesLesson() {
   return (
@@ -281,7 +292,160 @@ export default function ImagesLesson() {
           <LessonTip>
             Pe Windows putem face resize cu Paint, pe MacOS folosind X iar pe Linux Y.
           </LessonTip>
+          <p>
+            Apoi vom adauga atributul srcset unde definim diferitele
+            surse ale imaginii impreuna cu dimensiunea (in latime) a fiecareia.
+            In cazul nostru vom adauga urmatoarea bucata de cod:
+          </p>
+          <Highlight
+            className="my-5"
+            language="html"
+            code={`
+<img 
+  srcset=""
+  style="max-width: 100%"
+  alt=""
+/>`}
+          />
+          <LessonTip icon={faQuestionCircle}>
+            Atributul
+            {' '}
+            <strong>style</strong>
+            {' '}
+            este folosit pentru a adauga reguli
+            CSS elementelor.
+            {' '}
+            Inca nu am ajuns la acel capitol deci e absolut normal sa nu stii ce face.
+            <br />
+            {' '}
+            <br />
+            Totusi, te rugam sa-l pui acolo, impreuna cu valoarea `max-width: 100%. Astfel ne asiguram ca imaginile nu vor iesi din pagina.
+          </LessonTip>
+          <p>
+            Siiii voilà. Daca mergem in
+            {' '}
+            <a href="/intro/devtools">modul responsive</a>
+            {' '}
+            - si tinem tabul
+            {' '}
+            <strong>network</strong>
+            {' '}
+            deschis vom observa cum diferite surse ale imaginii
+            se vor descarca la rezolutii diferite.
+          </p>
+          <h1> VIDEO </h1>
+          <p>
+            Te incurajam sa te "joci" si cu optiunea DRP (pixels per inch or smth like that) pentru
+            a vedea ce imagini se incarca la rezolutii diferite. De exemplu, cu o valoarea de 2 si o latime de 450px se va incarca imaginea HD. Asta nu e o greseala, pentru ca avand setat DRP = 2 practic avem dublu numarul de pixeli pe ecran.
+          </p>
+          <div className="dots" />
+          <p>
+            Mergand mai departe, e posibil ca in pagina finala imaginea sa aiba
+            o dimensiune fixa - de exemplu 200px pe telefon si 500px pe tablete.
+            In cazuri de genul, e recomandat sa specificam asta prin atributul `sizes`, dandu-i browserului mai multe informatii despre care e cea mai buna sursa.
+          </p>
+          <p>
+            Dupa cum vezi, avem mai multe instructiuni separate din virgula. Primele 2 contin asa numitele
+            {' '}
+            <a href="/css/media-queries">media-query</a>
+            In cazul asta ele spun asta:
+          </p>
+          <ul>
+            <li> daca X - Y </li>
+            <li> daca X - Y </li>
+            <li> daca X - Y </li>
+          </ul>
+          <p>
+            Si uite ce imagini se incarca cand ne jucam cu dimensiunile ecranului:
+          </p>
+          <p>
+            Te incurajam sa experiementezi cu valorile de acolo in timp ce tii
+            tabul network deschis, pentru a intelege si mai bine ce/de ce anumite imagini vor fi incarcate.
+          </p>
         </section>
+        <section>
+          <LessonHeading as="h3" id="picture-element">
+            {'<picture> element'}
+          </LessonHeading>
+          <p>
+            Dupa cum ai vazut pana acum, elementul `
+            <img />
+            ` - desi destul de simplu in utilizare - ne ofera mai multe functionalitati care ne permit sa optimizam imaginile si experienta utilizatorilor. Cu toate acestea, mai avem o posibila optimizare pe care din pacate acesta nu o suporta - si anume formate multiple ale imaginii.
+          </p>
+          <blockquote>
+            De ce am vrea mai multe formate? Nu e
+            {' '}
+            <strong>JPG</strong>
+            {' '}
+            sau
+            {' '}
+            <strong>PNG</strong>
+            {' '}
+            de ajuns?
+          </blockquote>
+          <p>
+            Hmmm.... nu chiar. Exista formate mai moderne precum WebP sau AVIF care ofera aceeasi calitate a imaginii la o dimensiune mai mica.
+            De exemplu, uite diferentele de dimensiune ale acestei imagini in functie de format:
+          </p>
+          <LessonTable {...sizesTable} className="my-5" />
+          <p>
+            Dupa cum vezi formatele WebP si AVIF sunt mai mici decat JPG sau PNG,
+            deci imaginile in acest format se vor incarca mai repede decat celelalte.
+            Problema este ca nu toate browserele inteleg aceste noi formate `webp`.
+            Dupa cum vedem pe `caniuse.com` - AVIF are suport doar in ultimele versiuni
+            de Google Chrome in timp ce WebP este mai comun insa tot lipseste din
+            IOS 13 sau internet explorer 11.
+          </p>
+          <h1> DEMO can i use</h1>
+          <p>
+            Deci avem nevoie de o modalitate prin care browsere care inteleg
+            <strong>WebP</strong>
+            {' '}
+            sau
+            <strong> Avif</strong>
+            sa descarce aceste formate, in timp ce celelalte sa ramana la JPG.
+            Aceasta tehnica se numeste general
+            {' '}
+            <a href="/concepts/graceful-degradation">graceful degradation</a>
+            .
+          </p>
+          <p>
+            Thankfully, aceasta solutie ne este permisa de tagul
+            <span className="formatted">{'<picture>'}</span>
+            ,
+            unde putem specifica mai multe surse pentru o imagine si sa lasam
+            browserul sa aleaga pe cea pe care o intelege.
+          </p>
+          <Highlight
+            className="my-5"
+            language="html"
+            code={`
+<picture>
+ <!-- -->
+</picture>`}
+          />
+        </section>
+        <p>
+          Ordinea elementelor
+          {' '}
+          <span className="formatted">{'<source>'}</span>
+          {' '}
+          este extrem de importanta caci browserul le va parcurge de sus-in-jos si o va alege pe prima compatibila.
+        </p>
+        <h1> DEMOOO </h1>
+        <p>
+          Deci, pentru cea mai buna si optima experienta posibila, putem converti imaginea la 3 formate, iar apoi fiecarui format ii vom face resize la 3 rezolutii diferite. Astfel indiferent de browser si dispozitiv, utilizatorii vor avea o experienta excelenta.
+        </p>
+        <LessonResources
+          className="my-5"
+          links={[{
+            text: 'Link1',
+            url: 'https://google.com',
+          }, {
+            text: 'Link2',
+            url: 'https://linkedin.com',
+          }]}
+        />
       </Lesson>
     </>
   );

@@ -332,7 +332,7 @@ export default function Lesson0() {
                 început pentru a ne familiariza cu el.
                 De asemenea, înainte să începi
                 {' '}
-                <a href="/html/lesson-1">Lecția 1</a>
+                <a href="/html/introduction">Lecția 1</a>
                 {' '}
                 te invităm să arunci un ochi pe acest
                 {' '}
