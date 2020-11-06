@@ -41,9 +41,7 @@ export default function ImagesLesson() {
           url="https://FrontEnd.ro/html/images"
         />
       </Head>
-      <Lesson chapters={chapters}>
-        <h1> Imagini </h1>
-
+      <Lesson title="Imagini" chapters={chapters}>
         <LessonContributors contributors={contributors} />
         <LessonCover>
           <CoverSVG />
